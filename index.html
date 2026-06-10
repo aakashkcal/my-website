@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My AI-Powered Website</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+        h1 { color: #333; }
+        #chat-box { border: 1px solid #ccc; padding: 15px; height: 300px; overflow-y: auto; background: #f9f9f9; margin-bottom: 10px; border-radius: 5px; }
+        #user-input { width: 75%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Smart Store</h1>
+    <p>This is a live website powered by a backend AI Agent.</p>
+
+    <!-- Chat UI Widget -->
+    <div id="chat-box"><p><strong>Agent:</strong> Hello! How can I assist you today?</p></div>
+    <input type="text" id="user-input" placeholder="Ask the AI Agent anything...">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const box = document.getElementById('chat-box');
+            if (!input.value.trim()) return;
+
+            // Display user message
+            box.innerHTML += `<p><strong>You:</strong> ${input.value}</p>`;
+            const query = input.value;
+            input.value = '';
+
+            // Send query to our Python AI Agent backend
+            try {
+                const response = await fetch('http://127.0.0', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: query })
+                });
+                const data = await response.json();
+                box.innerHTML += `<p><strong>Agent:</strong> ${data.output}</p>`;
+            } catch (err) {
+                box.innerHTML += `<p style="color:red;"><strong>Error:</strong> Agent backend offline.</p>`;
+            }
+            box.scrollTop = box.scrollHeight;
+        }
+    </script>
+</body>
+</html>
