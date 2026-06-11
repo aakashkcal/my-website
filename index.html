@@ -34,7 +34,7 @@
 
             // Send query to our Python AI Agent backend
             try {
-                const response = await fetch('https://8080-cs-18c70ddf-af6b-460f-86db-379276def767.cs-asia-southeast1-cash.cloudshell.dev/', {
+                const response = await fetch('https://8080-cs-18c70ddf-af6b-460f-86db-379276def767.cs-asia-southeast1-cash.cloudshell.dev/agent', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message: query })
